@@ -2,6 +2,7 @@ package com.example.kotlinsecurityjwt.member.controller
 
 import com.example.kotlinsecurityjwt.member.dto.MemberDtoRequest
 import com.example.kotlinsecurityjwt.member.service.MemberService
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -13,7 +14,7 @@ class MemberController (
 ) {
     /** 회원가입 */
     @RequestMapping("/signup")
-    fun signUp(@RequestBody memberDtoRequest: MemberDtoRequest): String {
+    fun signUp(@RequestBody @Valid memberDtoRequest: MemberDtoRequest): String {
         return memberService.signUp(memberDtoRequest)
     }
 }
