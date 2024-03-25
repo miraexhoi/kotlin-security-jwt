@@ -2,6 +2,7 @@ package com.example.kotlinsecurityjwt.member.dto
 
 import com.example.kotlinsecurityjwt.common.annotation.ValidEnum
 import com.example.kotlinsecurityjwt.common.status.Gender
+import com.example.kotlinsecurityjwt.member.entity.MemberEntity
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
@@ -62,4 +63,7 @@ data class MemberDtoRequest (
 
     private fun String.toLocalDate(): LocalDate =
         LocalDate.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+    fun toEntity(): MemberEntity =
+        MemberEntity(id, loginId, password, name, birthDate, gender, email)
 }
