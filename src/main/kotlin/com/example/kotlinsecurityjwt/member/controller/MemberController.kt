@@ -1,5 +1,6 @@
 package com.example.kotlinsecurityjwt.member.controller
 
+import com.example.kotlinsecurityjwt.common.dto.BaseResponse
 import com.example.kotlinsecurityjwt.member.dto.MemberDtoRequest
 import com.example.kotlinsecurityjwt.member.service.MemberService
 import jakarta.validation.Valid
@@ -14,7 +15,8 @@ class MemberController (
 ) {
     /** 회원가입 */
     @RequestMapping("/signup")
-    fun signUp(@RequestBody @Valid memberDtoRequest: MemberDtoRequest): String {
-        return memberService.signUp(memberDtoRequest)
+    fun signUp(@RequestBody @Valid memberDtoRequest: MemberDtoRequest): BaseResponse<Unit> {
+        val resultMsg: String = memberService.signUp(memberDtoRequest)
+        return BaseResponse(message = resultMsg)
     }
 }

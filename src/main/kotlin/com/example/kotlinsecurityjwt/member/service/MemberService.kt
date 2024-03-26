@@ -1,5 +1,6 @@
 package com.example.kotlinsecurityjwt.member.service
 
+import com.example.kotlinsecurityjwt.common.exception.InvalidInputException
 import com.example.kotlinsecurityjwt.member.dto.MemberDtoRequest
 import com.example.kotlinsecurityjwt.member.entity.MemberEntity
 import com.example.kotlinsecurityjwt.member.repository.MemberRepository
@@ -17,18 +18,10 @@ class MemberService (
         // ID 중복 검사
         var member: MemberEntity? = memberRepository.findByLoginId(memberDtoRequest.loginId)
         if (member != null) {
-            return "이미 등록된 ID 입니다."
+            throw InvalidInputException("loginId", "이미 등록된 ID 입니다.")
         }
 
-        member = MemberEntity (
-            null,
-            memberDtoRequest.loginId,
-            memberDtoRequest.password,
-            memberDtoRequest.name,
-            memberDtoRequest.birthDate,
-            memberDtoRequest.gender,
-            memberDtoRequest.email
-        )
+        member = memberDtoRequest.toEntity()
 
         memberRepository.save(member)
 
