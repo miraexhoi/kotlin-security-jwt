@@ -1,8 +1,6 @@
 package com.example.kotlinsecurityjwt.common.authority
 
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
@@ -59,6 +57,25 @@ class JwtTokenProvider {
         val principal: UserDetails = User(claims.subject,"",authorities)
 
         return UsernamePasswordAuthenticationToken(principal,"",authorities)
+    }
+
+    /** Token 검증 */
+    fun validateToken(token: String): Boolean {
+        try {
+            getClaims(token)
+            return true
+        } catch (e: Exception) {
+            when (e) {
+                is SecurityException -> {}  // Invalid JWT Token
+                is MalformedJwtException -> {}  // Invalid JWT Token
+                is ExpiredJwtException -> {}    // Expired JWT Token
+                is UnsupportedJwtException -> {}    // Unsupported JWT Token
+                is IllegalArgumentException -> {}   // JWT claims string is empty
+                else -> {}  // else
+            }
+            println(e.message)
+        }
+        return false
     }
 
     private fun getClaims(token: String): Claims =
