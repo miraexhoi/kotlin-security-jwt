@@ -3,7 +3,6 @@ package com.example.kotlinsecurityjwt.member.entity
 import com.example.kotlinsecurityjwt.common.status.Gender
 import com.example.kotlinsecurityjwt.common.status.ROLE
 import jakarta.persistence.*
-import java.lang.reflect.Member
 import java.time.LocalDate
 
 @Entity
@@ -52,5 +51,5 @@ class MemberRole(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = ForeignKey(name = "fk_member_role_id"))
-    val member: Member,
+    val member: MemberEntity?,
     )
